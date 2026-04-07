@@ -94,7 +94,7 @@ export interface Progress {
   analyzed: string[];
   startDate?: string;
   lastStudyDate?: string;
-  studyDays: number[];
+  studyDays: string[];
   currentStreak: number;
   achievements: string[];
 }

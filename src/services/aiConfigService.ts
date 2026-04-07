@@ -60,14 +60,26 @@ export async function testAIProvider(provider: { apiKey: string; baseUrl: string
     if (response.ok) {
       return { success: true, message: '连接成功' };
     }
-    const error = await response.json().catch(() => ({}));
+    await response.json().catch(() => ({}));
     return { success: false, message: `连接失败: ${response.status}` };
-  } catch (e: any) {
-    return { success: false, message: `网络错误: ${e.message}` };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : '未知错误';
+    return { success: false, message: `网络错误: ${message}` };
   }
 }
 
-export async function getAIExplanation(config: AIConfig, question: any, userAnswer: string, isCorrect: boolean): Promise<{ explanation: string; hints: string[] }> {
+interface AIQuestionPayload {
+  type?: string;
+  code?: string;
+  question?: string;
+  answer?: string | string[];
+}
+
+interface ChatCompletionResponse {
+  choices?: Array<{ message?: { content?: string } }>;
+}
+
+export async function getAIExplanation(config: AIConfig, question: AIQuestionPayload, userAnswer: string, isCorrect: boolean): Promise<{ explanation: string; hints: string[] }> {
   const provider = config.providers.find(p => p.name === config.activeProvider);
   if (!provider || !provider.apiKey) {
     return { explanation: '请先配置 AI 服务商的 API Key', hints: [] };
@@ -95,7 +107,7 @@ export async function getAIExplanation(config: AIConfig, question: any, userAnsw
     });
 
     if (response.ok) {
-      const data = await response.json();
+      const data = await response.json() as ChatCompletionResponse;
       const content = data.choices?.[0]?.message?.content || '';
       return {
         explanation: content,
@@ -103,19 +115,23 @@ export async function getAIExplanation(config: AIConfig, question: any, userAnsw
       };
     }
     return { explanation: 'AI 服务请求失败，请检查配置', hints: [] };
-  } catch (e: any) {
-    return { explanation: `请求错误: ${e.message}`, hints: [] };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : '未知错误';
+    return { explanation: `请求错误: ${message}`, hints: [] };
   }
 }
 
 export async function getSupportedModels(provider: { apiKey: string; baseUrl: string }): Promise<string[]> {
+  interface ModelsResponse {
+    data?: Array<{ id?: string }>;
+  }
   try {
     const response = await fetch(`${provider.baseUrl}/models`, {
       headers: { 'Authorization': `Bearer ${provider.apiKey}` },
     });
     if (response.ok) {
-      const data = await response.json();
-      return (data.data || []).map((m: any) => m.id).sort();
+      const data = await response.json() as ModelsResponse;
+      return (data.data || []).map((model) => model.id).filter((id): id is string => Boolean(id)).sort();
     }
   } catch (e) {
     console.error('Failed to fetch models:', e);

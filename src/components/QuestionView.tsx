@@ -16,6 +16,7 @@ interface QuestionViewProps {
 export const QuestionView: React.FC<QuestionViewProps> = memo(({
   question, isDarkMode, progress, onAnswer, onToggleBookmark,
 }) => {
+  void isDarkMode;
   const [answer, setAnswer] = useState('');
   const [answers, setAnswers] = useState<string[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<number[]>([]);

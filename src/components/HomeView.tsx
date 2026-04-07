@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { chapters } from '@/data/lessons';
 import { ViewType, UserStats } from '@/types';
-import { questions } from '@/data/lessons';
 
 interface HomeViewProps {
   isDarkMode: boolean;
@@ -22,6 +21,7 @@ const modeIcons: Record<string, React.ReactNode> = {
 };
 
 export const HomeView: React.FC<HomeViewProps> = memo(({ isDarkMode, stats, onNavigate, onChapterSelect }) => {
+  void isDarkMode;
   const statCards = useMemo(() => [
     { label: '已完成', value: stats.totalCompleted, color: 'text-blue-400' },
     { label: '答对', value: stats.totalCorrect, color: 'text-emerald-400' },
@@ -33,9 +33,6 @@ export const HomeView: React.FC<HomeViewProps> = memo(({ isDarkMode, stats, onNa
   const getChapterProgress = (chapterId: string) => {
     const ch = chapters.find(c => c.id === chapterId);
     if (!ch) return { correct: 0, total: 0 };
-    const correct = ch.questionIds.filter(id => stats.chapterStats[chapterId]?.correct >= 0
-      ? ch.questionIds.slice(0, stats.chapterStats[chapterId].correct + 1).includes(id)
-      : false).length;
     return { correct: Math.min(stats.chapterStats[chapterId]?.correct || 0, ch.questionIds.length), total: ch.questionIds.length };
   };
 

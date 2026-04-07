@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { chapters } from '@/data/lessons';
-import { UserStats, Progress as ProgressType, Achievement } from '@/types';
+import { UserStats, Progress as ProgressType } from '@/types';
 import { achievements } from '@/data/lessons';
 
 interface StatsViewProps {
@@ -15,6 +15,7 @@ interface StatsViewProps {
 }
 
 export const StatsView: React.FC<StatsViewProps> = memo(({ isDarkMode, stats, progress, onResetProgress }) => {
+  void isDarkMode;
   const handleReset = () => {
     if (confirm('确定要重置所有进度吗？此操作不可撤销！')) {
       onResetProgress();
