@@ -15,7 +15,7 @@ interface KeyDef {
   type?: 'modifier' | 'special' | 'space';
 }
 
-const KEYBOARD_ROWS: KeyDef[][] = [
+const KEYBOARD_ROWS: Array<Array<string | KeyDef>> = [
   // Row 0: Esc + F-row
   [{label:'Esc', code:'Escape', width:2}, {label:'F1', code:'F1'}, {label:'F2', code:'F2'},
    {label:'F3', code:'F3'}, {label:'F4', code:'F4'}, {label:'F5', code:'F5'},
@@ -23,19 +23,19 @@ const KEYBOARD_ROWS: KeyDef[][] = [
    {label:'F9', code:'F9'}, {label:'F10', code:'F10'}, {label:'F11', code:'F11'},
    {label:'F12', code:'F12'}],
   // Row 1: number row
-  [{label:'`', code:'Backquote'}, {'1':'!',code:'Digit1'},{'2':'@',code:'Digit2'},{'3':'#',code:'Digit3'},
-   {'4':'$',code:'Digit4'},{'5':'%',code:'Digit5'},{'6':'^',code:'Digit6'},{'7':'&',code:'Digit7'},
-   {'8':'*',code:'Digit8'},{'9':'(',code:'Digit9'},{')':')',code:'Digit0'},{'-':'_',code:'Minus'},
-   {'=':'=',code:'Equal'},{width:7,label:'',code:'Backspace',type:'special'}],
+  [{label:'`', code:'Backquote'}, {label:'1', code:'Digit1'}, {label:'2', code:'Digit2'}, {label:'3', code:'Digit3'},
+   {label:'4', code:'Digit4'}, {label:'5', code:'Digit5'}, {label:'6', code:'Digit6'}, {label:'7', code:'Digit7'},
+   {label:'8', code:'Digit8'}, {label:'9', code:'Digit9'}, {label:'0', code:'Digit0'}, {label:'-', code:'Minus'},
+   {label:'=', code:'Equal'}, {width:7,label:'Backspace',code:'Backspace',type:'special'}],
   // Row 2: QWERTY row
   [{width:1.5,label:'Tab',code:'Tab',type:'modifier'},'Q','W','E','R','T','Y','U','I','O','P',
-   {'[':'[',code:'BracketLeft'},{']':']',code:'BracketRight'},{width:1.5,'\\':'\\',code:'Backslash'}],
+   {label:'[',code:'BracketLeft'},{label:']',code:'BracketRight'},{width:1.5,label:'\\',code:'Backslash'}],
   // Row 3: ASDF row
   [{width:1.75,label:'Caps',code:'CapsLock',type:'modifier'},'A','S','D','F','G','H','J','K','L',
-   {';':';',code:'Semicolon'},{"'":"'",code:'Quote'},{width:2.25,label:'Enter ↵',code:'Enter',type:'special'}],
+   {label:';',code:'Semicolon'},{label:"'",code:'Quote'},{width:2.25,label:'Enter ↵',code:'Enter',type:'special'}],
   // Row 4: ZXCV row
   [{width:2.25,label:'Shift ⇧',code:'ShiftLeft',type:'modifier'},'Z','X','C','V','B','N','M',
-   {',':',',code:'Comma'},{'.':'.',code:'Period'},{'/':'/',code:'Slash'},
+   {label:',',code:'Comma'},{label:'.',code:'Period'},{label:'/',code:'Slash'},
    {width:2.75,label:'Shift ⇧',code:'ShiftRight',type:'modifier'}],
   // Row 5: bottom row
   [{width:1.25,label:'Ctrl',code:'ControlLeft',type:'modifier'},
@@ -55,9 +55,6 @@ function parseKey(k: string | KeyDef): KeyDef {
   if (typeof k === 'string') return { label: k, code: `Key${k.toUpperCase()}` };
   return { ...k };
 }
-
-/** 所有有效按键的 code 集合 */
-const VALID_KEY_CODES = new Set(KEYBOARD_ROWS.flat().map(parseKey).map(k => k.code));
 
 /* ============================================================
    虚拟键盘组件（独立 memo）
@@ -92,15 +89,7 @@ const VirtualKeyboard: React.FC<VirtualKeyboardProps> = memo(({ isDarkMode, acti
               const def = parseKey(k);
               const isActive = activeKeys.has(def.code);
               const w = def.width ?? 1;
-              let displayLabel = typeof k === 'string'
-                ? (typeof (k as Record<string,string>) === 'object' ? '' : k)
-                : def.label;
-              if (typeof k === 'object' && !Array.isArray(k) && 'label' in k) {
-                // already parsed
-              }
-              if (typeof k !== 'string' || k.length === 1) {
-                displayLabel = typeof k === 'string' ? k : def.label;
-              }
+              const displayLabel = typeof k === 'string' ? k : def.label;
 
               return (
                 <button
@@ -152,13 +141,6 @@ interface RunResult {
 const DIFFICULTY_LABELS: Record<string, string> = { beginner: '入门', basic: '基础', intermediate: '中级', advanced: '高级' };
 const DIFFICULTY_COLORS: Record<string, string> = {
   beginner: 'text-green-400', basic: 'text-blue-400', intermediate: 'text-amber-400', advanced: 'text-red-400',
-};
-
-/** token → CSS 类名 */
-const TOKEN_CLASS: Record<string, string> = {
-  keyword: 'syntax-keyword', type: 'syntax-type', string: 'syntax-string',
-  number: 'syntax-number', comment: 'syntax-comment', preprocessor: 'syntax-preprocessor',
-  function: 'syntax-function', plain: '', identifier: '',
 };
 
 export const CodeTypingPractice: React.FC<CodeTypingPracticeProps> = memo(({ isDarkMode }) => {

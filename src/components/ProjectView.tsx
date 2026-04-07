@@ -11,6 +11,7 @@ interface ProjectViewProps {
 }
 
 export const ProjectView: React.FC<ProjectViewProps> = memo(({ isDarkMode, projectId, onNavigate }) => {
+  void isDarkMode;
   const project = projects.find(p => p.id === projectId);
   const [currentFrag, setCurrentFrag] = useState(0);
 

@@ -18,7 +18,7 @@ export const BookmarkedView: React.FC<BookmarkedViewProps> = memo(({ isDarkMode,
 
   const current = bookmarkedQuestions[currentIndex];
 
-  const handleAnswer = (_isCorrect: boolean) => { /* No-op for bookmarked view */ };
+  const handleAnswer = () => { /* No-op for bookmarked view */ };
 
   const toggleBookmark = (questionId: string) => {
     const updated = { ...progress };

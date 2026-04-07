@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, BookOpen, Trophy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { chapters, questions } from '@/data/lessons';
-import { Question, Progress as ProgressType, Lesson } from '@/types';
+import { Progress as ProgressType, Lesson } from '@/types';
 import { QuestionView } from './QuestionView';
 
 interface TrainingViewProps {

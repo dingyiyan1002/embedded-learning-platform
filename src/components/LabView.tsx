@@ -1,6 +1,6 @@
-import React, { memo, useState, useCallback, useRef, useEffect, useMemo } from 'react';
+import React, { memo, useState, useCallback, useRef, useMemo } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { CodeBlock, tokenize } from './SyntaxHighlighter';
+import { tokenize } from './SyntaxHighlighter';
 
 /** token type → syntax CSS class */
 const TCLASS: Record<string, string> = {
@@ -18,7 +18,7 @@ interface LabViewProps {
 }
 
 /* ===== 指针与内存 ===== */
-const PointerSandboxDemo = memo(({ isDarkMode }: { isDarkMode: boolean }) => (
+const PointerSandboxDemo = memo(() => (
   <div className="glass rounded-xl p-6">
     <h3 className="text-lg font-bold mb-4 text-amber-400">指针与内存</h3>
     <p className="text-sm opacity-60 mb-4">可视化展示变量地址、指针指向关系、解引用操作</p>
@@ -40,7 +40,7 @@ const PointerSandboxDemo = memo(({ isDarkMode }: { isDarkMode: boolean }) => (
 PointerSandboxDemo.displayName = 'PointerSandboxDemo';
 
 /* ===== 函数栈帧 ===== */
-const StackFrameDemo = memo(({ isDarkMode }: { isDarkMode: boolean }) => (
+const StackFrameDemo = memo(() => (
   <div className="glass rounded-xl p-6">
     <h3 className="text-lg font-bold mb-4 text-amber-400">函数栈帧</h3>
     <p className="text-sm opacity-60 mb-4">可视化函数调用栈的入栈/出栈过程</p>
@@ -324,8 +324,8 @@ export const LabView: React.FC<LabViewProps> = memo(({ isDarkMode }) => (
         <TabsTrigger value="struct">内存对齐</TabsTrigger>
       </TabsList>
       <TabsContent value="runner"><CodeRunnerDemo isDarkMode={isDarkMode} /></TabsContent>
-      <TabsContent value="pointer"><PointerSandboxDemo isDarkMode={isDarkMode} /></TabsContent>
-      <TabsContent value="stack"><StackFrameDemo isDarkMode={isDarkMode} /></TabsContent>
+      <TabsContent value="pointer"><PointerSandboxDemo /></TabsContent>
+      <TabsContent value="stack"><StackFrameDemo /></TabsContent>
       <TabsContent value="cow"><COWDemo /></TabsContent>
       <TabsContent value="bits"><BitSwitchDemo isDarkMode={isDarkMode} /></TabsContent>
       <TabsContent value="struct"><StructPackerDemo /></TabsContent>

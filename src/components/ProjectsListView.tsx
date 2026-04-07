@@ -1,9 +1,7 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import { projects } from '@/data/projects';
-import { ViewType } from '@/types';
 
 interface ProjectsListViewProps {
   isDarkMode: boolean;
@@ -19,6 +17,7 @@ const diffColors: Record<string, string> = {
 
 export const ProjectsListView: React.FC<ProjectsListViewProps> = memo(({ isDarkMode, onSelectProject }) => (
   <div className="max-w-5xl mx-auto px-4 py-8">
+    {void isDarkMode}
     <h1 className="text-2xl font-bold mb-6">项目实战</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {projects.map(p => (
