@@ -1,0 +1,270 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Dark mode is default */
+body {
+  background: #0b1120;
+  color: #e2e8f0;
+}
+
+body:not(.dark) {
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+body:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+body:not(.dark) .glass-hover:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Code block styles */
+.code-wrapper {
+  background: #0d1117;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+body:not(.dark) .code-wrapper {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.code-block {
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body:not(.dark) ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+body:not(.dark) ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+body:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Order question styles */
+.order-result-area {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+body:not(.dark) .order-result-area {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.order-line-btn {
+  background: linear-gradient(135deg, #0d1117, #161b22);
+  color: #e6edf3;
+  transition: all 0.2s;
+}
+
+body:not(.dark) .order-line-btn {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #334155;
+}
+
+body:not(.dark) .order-line-btn:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+/* Viz component styles */
+.viz-container {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body:not(.dark) .viz-container {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.viz-memory-cell,
+.viz-array-cell,
+.viz-ptr-box,
+.viz-flow-action,
+.viz-stack-frame {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+
+body:not(.dark) .viz-memory-cell,
+body:not(.dark) .viz-array-cell,
+body:not(.dark) .viz-ptr-box,
+body:not(.dark) .viz-flow-action,
+body:not(.dark) .viz-stack-frame {
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body:not(.dark) .viz-flow-action {
+  color: #475569;
+}
+
+.viz-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+}
+
+body:not(.dark) .viz-table td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  color: #334155;
+}
+
+.viz-execution {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body:not(.dark) .viz-execution {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.viz-exec-cell {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body:not(.dark) .viz-exec-cell {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* List hover */
+.list-item-hover:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body:not(.dark) .list-item-hover:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Nav slider */
+.nav-slider {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body:not(.dark) .nav-slider {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Syntax highlighting colors */
+.syntax-keyword { color: #ff7b72; }
+body:not(.dark) .syntax-keyword { color: #d73a49; }
+
+.syntax-type { color: #79c0ff; }
+body:not(.dark) .syntax-type { color: #005cc5; }
+
+.syntax-string { color: #a5d6ff; }
+body:not(.dark) .syntax-string { color: #032f62; }
+
+.syntax-number { color: #d2a8ff; }
+body:not(.dark) .syntax-number { color: #005cc5; }
+
+.syntax-comment { color: #8b949e; font-style: italic; }
+body:not(.dark) .syntax-comment { color: #6a737d; }
+
+.syntax-preprocessor { color: #ffa657; }
+body:not(.dark) .syntax-preprocessor { color: #6f42c1; }
+
+.syntax-function { color: #d2a8ff; }
+body:not(.dark) .syntax-function { color: #6f42c1; }
